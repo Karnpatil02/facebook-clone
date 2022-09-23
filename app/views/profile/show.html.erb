@@ -1,0 +1,51 @@
+<div style="margin-left: 50%;">
+  <%= @current_user.first_name%> <%= @current_user.last_name %>
+
+</div>
+<div style="background-color: lightblue;">
+  <%= link_to 'timeline', posts_path %>￼
+  <%= link_to 'friends', users_path %>
+  <%= link_to 'edit profile', edit_user_path(current_user) %>
+  <%= link_to 'delete profile', root_path, data: {turbo_method: :delete} %>
+
+</div>
+  
+<p style="color: green"><%= notice %></p>
+
+<div class="container">
+  <% @posts.each do |post| %>
+  <%= render @posts %>
+  <p><%= link_to "Show", post ,style: "margin-left: 10vh"%></p>
+  <p><%= link_to "edit",edit_post_path(post), style: "margin-left: 20%" %></p> 
+  <p><%= button_to "Destroy", post, method: :delete,style: "margin-left: 10vh" %></p>
+  <% end %>
+
+</div>
+
+<style>
+a:link {
+text-decoration: none;
+color: black;
+}
+
+a:visited {
+text-decoration: none;
+color: black;
+}
+
+a:hover {
+text-decoration: underline;
+color: blue;
+}
+
+a:active {
+text-decoration: underline;
+color: green;
+}
+p {
+  display: inline-block;
+}
+</style>
+
+
+

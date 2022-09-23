@@ -1,0 +1,6 @@
+<div>
+	<% if user.image_link.present? %>
+	<%= image_tag(user.image_link)%>
+	<% end %>
+   <%= link_to user.first_name, user %>
+  </div>

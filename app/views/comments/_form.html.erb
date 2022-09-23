@@ -1,0 +1,16 @@
+<%= form_with model: [ @post, @post.comment.build ] do |form| %>
+  <p>
+    <%= form.text_field :commenter, value: current_user.first_name, type: :hidden%>
+  </p>
+  <p>
+    <%= form.text_field :body,class: "form-outline w-20", placeholder: "Add comment" %>
+  </p>
+   <p>
+    <%= form.number_field :user_id, value: current_user.id ,type: :hidden%>
+  </p>
+  
+  
+   <p>
+    <%= form.submit %>
+  </p>
+<% end %>

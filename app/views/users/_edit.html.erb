@@ -1,0 +1,51 @@
+
+<div class="container">
+  <div class="row">
+    
+    <div class="col-md-7">
+      <%= form_for @user do |f| %>
+        <div class="field form-group">
+          <%= f.label :first_name, class: "control-label"%>
+          <%= f.text_field :first_name, class: "form-control"%>
+        </div>
+        <div class="field form-group">
+          <%= f.label :last_name, class: "control-label"%>
+          <%= f.text_field :last_name, class: "form-control"%>
+        </div>
+        <div class="field form-group">
+          <%= f.label :email, class: "control-label"%>
+          <%= f.text_field :email, class: "form-control"%>
+        </div>
+        <div class="field form-group">
+          <%= f.label :password, class: "control-label"%>
+          <%= f.text_field :password, class: "form-control"%>
+        </div>
+        <div class="field form-group">
+          <%= f.label :age, class: "control-label"%>
+          <%= f.date_field :age, class: "form-control"%>
+        </div>
+        <div class="field form-group">
+        <%= f.label :Gender%> <br>
+        <%= f.radio_button :gender, "male" %>
+        <%= f.label :male%>
+        <%= f.radio_button :gender, "female" %>
+        <%= f.label :female%>
+      </div>
+        <div class="field form-group">
+          <%= f.label :contact, class: "control-label"%>
+          <%= f.text_field :contact, class: "form-control"%>
+        </div>
+        
+
+        <div class="field form-group">
+        <%= f.submit 'Update Profile', class: "btn btn-success" %>
+        </div>
+      <% end %>
+    
+    </div>
+
+
+
+</div>
+</div>
+

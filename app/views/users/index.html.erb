@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 30%;
+  height: 300px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  background-color: ghostwhite;
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 300px;
+}
+</style>
+</head>
+<body>
+
+<h2>Friends</h2>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Friend request</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Friends</button>
+  
+</div>
+
+<div id="London" class="tabcontent">
+  <h3>friends request</h3>
+<% pending_for_me_to_accept (@users)%>  
+  <% @users.each do |user| %>    
+      
+       <% if its_me?(user) %>
+        <%= button_to 'Go to My Profile ', user, method: :get %>  
+      <% elsif pending_for_accept_my_request(user) %>
+      <li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+        <%= button_to 'Cancel Request Sent', friendship_path(finding_friendship_id(user)), method: :delete %> 
+      <% elsif pending_for_me_to_accept(user) %>
+        <div><li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+          <%= button_to 'Accept Request',edit_friendship_path(finding_friendship_id(user)), method: :get %> 
+          <%= button_to 'Cancel Request',friendship_path(finding_friendship_id(user)), method: :delete %> 
+        </div>
+      <% elsif we_are_friends(user)  %>
+       <li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+        <%= button_to 'Friends ', user, method: :get %>  
+        <%= button_to 'Remove',friendship_path(finding_friendship_id(user)), method: :delete %> 
+      <%elsif %>
+       <li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+        <%= button_to 'Add Friend', friendships_path(friend_id: user.id), method: :post,style: "text-decoration: none;" %>  
+      <% end %>
+       
+      </li> 
+    
+  <% end %>
+
+</ul>
+</div>
+  
+</div>
+
+<div id="Paris" class="tabcontent">
+  <h3>friends</h3>
+  
+<div class="col-md-4">
+<ul class="list-group">
+<% we_are_friends (@users)%>  
+  <% @users.each do |user| %>    
+      
+      <% if we_are_friends(user)  %>
+      <li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+
+        <%= button_to 'Friends ', user, method: :get %>  
+        <%= button_to 'Remove',friendship_path(finding_friendship_id(user)), method: :delete %> 
+      <%elsif pending_for_accept_my_request(@users) %>
+      <li class="list-group-item"><%= link_to user.first_name, user,class: "link-dark",style: "text-decoration: none;" %> <%=link_to user.last_name, user,class: "link-dark",style: "text-decoration: none;"%> 
+       
+        <%= button_to 'Add Friend', friendships_path(friend_id: user.id), method: :post,style: "text-decoration: none;" %>  
+      <% end %>
+       
+      </li> 
+    
+  <% end %>
+
+
+</ul>
+</div>
+
+</div>
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+   
+</body>
+</html> 
